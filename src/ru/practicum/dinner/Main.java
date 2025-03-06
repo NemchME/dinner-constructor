@@ -1,16 +1,19 @@
 package ru.practicum.dinner;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
 
     static DinnerConstructor dc;
     static Scanner scanner;
+    static Random rd;
 
     public static void main(String[] args) {
         dc = new DinnerConstructor();
         scanner = new Scanner(System.in);
+        rd = new Random();
 
         while (true) {
             printMenu();
@@ -59,14 +62,36 @@ public class Main {
         scanner.nextLine();
 
         System.out.println("Вводите типы блюда, разделяя символом переноса строки (enter). Для завершения ввода введите пустую строку");
-        String nextItem = scanner.nextLine();
 
-        //реализуйте ввод типов блюд
-        while (!nextItem.isEmpty()) {
+        ArrayList<String> necessaryDishes = new ArrayList<>();
 
+        while (true) {
+            String necessaryDish = scanner.nextLine();
+
+            if (necessaryDish.isEmpty()) {
+                break;
+            }
+            if (dc.dishes.containsKey(necessaryDish)) {
+                necessaryDishes.add(necessaryDish);
+            } else {
+                System.out.println("Несуществующий тип блюда!");
+            }
         }
 
-        // сгенерируйте комбинации блюд и выведите на экран
+        int counter = 1;
+        while (numberOfCombos != counter) {
+            System.out.println("Комбо №" + counter);
+            ArrayList<String> combo = new ArrayList<>();
 
+            for (int i = 0; i < necessaryDishes.size(); i++) {
+                String category = necessaryDishes.get(i);
+                ArrayList<String> dishesInCategory = dc.dishes.get(category);
+
+                int index = rd.nextInt(necessaryDishes.size());
+                combo.add(dishesInCategory.get(index));
+            }
+            System.out.println(combo);
+            counter++;
+        }
     }
 }
