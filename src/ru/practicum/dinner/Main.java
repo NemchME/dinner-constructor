@@ -32,6 +32,10 @@ public class Main {
         }
     }
 
+    public static boolean checkType(String key) {
+        return dc.dishes.containsKey(key);
+    }
+
     private static void printMenu() {
         System.out.println("Выберите команду:");
         System.out.println("1 - Добавить новое блюдо");
@@ -45,7 +49,7 @@ public class Main {
         System.out.println("Введите название блюда:");
         String dishName = scanner.nextLine();
 
-        if (dc.dishes.containsKey(dishType)) {
+        if (checkType(dishType)) {
             dc.dishes.get(dishType).add(dishName);
         } else {
             ArrayList<String> dishNames = new ArrayList<>();
@@ -71,7 +75,7 @@ public class Main {
             if (necessaryDish.isEmpty()) {
                 break;
             }
-            if (dc.dishes.containsKey(necessaryDish)) {
+            if (checkType(necessaryDish)) {
                 necessaryDishes.add(necessaryDish);
             } else {
                 System.out.println("Несуществующий тип блюда!");
